@@ -13,13 +13,14 @@ function Deatails() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
+  const type = searchParams.get('type');
+
   const [movieDetails, setMovieDetails] = useState(null);
-  const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
 
   const fetchMovieDetails = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/data/details?q=${itemId}`);
+      const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/data/details?itemId=${itemId}&type=${type}`);
       setMovieDetails(response.data);
     } catch (error) {
       console.error('Error fetching movie details:', error);
@@ -83,7 +84,7 @@ function Deatails() {
 
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-light">{movieDetails.detail.original_name || movieDetails.detail.name || movieDetails.detail.title || movieDetails.detail.original_title}</h1>
             <div className='flex mt-6'>
-              <h1 className='text-3xl mr-4 font-semibold'>{(movieDetails.detail.vote_average / 2).toFixed(1)}</h1>
+              <h1 className='text-3xl mr-4 font-semibold'>{(movieDetails.detail.vote_average / 2).toFixed(2)}</h1>
               {[...Array(5)].map((_, index) => (
                 <span key={index} className="text-sm mt-2 text-white">
                   {index < Math.floor(movieDetails.detail.vote_average / 2) ? (
@@ -107,7 +108,7 @@ function Deatails() {
 
                 </tr>
                 <tr>
-                  <td className="pr-4">{(movieDetails.detail.runtime || movieDetails.detail.episode_run_time[0]) === undefined ? 'N/A' : `${movieDetails.detail.runtime || movieDetails.detail.episode_run_time[0]} min`} </td>
+                  <td className="pr-4">{(movieDetails.detail.runtime || movieDetails.detail.episode_run_time) === undefined ? 'N/A' : `${movieDetails.detail.runtime || movieDetails.detail.episode_run_time[0]} min`} </td>
 
                   <td className="pr-4">{(movieDetails.detail.release_date || movieDetails.detail.first_air_date).slice(0, 4)}
 
@@ -133,9 +134,9 @@ function Deatails() {
               </div>
             </>}
 
-            {movieDetails.detail.created_by[0] && <><h1 className='mt-4 text-xl font-medium'>Created by</h1>
+            {movieDetails.detail.created_by && <><h1 className='mt-4 text-xl font-medium'>Created by</h1>
               <div className='flex mt-3 gap-2 flex-wrap'>
-                <p className=' border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>{movieDetails.detail.created_by[0].name || movieDetails.detail.created_by[0].original_name}</p>
+                <p className=' border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>{movieDetails.detail.created_by.length>0 && (movieDetails.detail.created_by[0].name || movieDetails.detail.created_by[0].original_name)}</p>
               </div>
             </>}
 

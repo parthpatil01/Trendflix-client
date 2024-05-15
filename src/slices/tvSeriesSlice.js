@@ -1,40 +1,42 @@
-// slices/tvSeriesSlice.js
+// tvSlice.js
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchTVSeries = createAsyncThunk(
-  'tvseries/fetchTVSeries',
-  async () => {
+export const fetchTV = createAsyncThunk('tvseries/fetchTV', async (page) => {
+ 
     const response = await axios.get(
-      `${import.meta.env.VITE_APP_API_URL}/data/tvseries`
+      `${import.meta.env.VITE_APP_API_URL}/data/tvseries?page=${page}`
     );
     return response.data;
-  }
-);
+});
 
 const tvSeriesSlice = createSlice({
-  name: 'tvseries',
-  initialState: {
-    data: [],
-    status: 'idle',
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchTVSeries.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(fetchTVSeries.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.data = action.payload;
-      })
-      .addCase(fetchTVSeries.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
-      });
-  },
+    name: 'tvseries',
+    initialState: {
+        series: [],
+        page: 1,
+        hasMore: true,
+        loading: false,
+        error: null,
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(fetchTV.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchTV.fulfilled, (state, action) => {
+                state.loading = false;
+                state.series = [...state.series, ...action.payload];
+                state.hasMore = action.payload.length > 0;
+                state.page++;
+            })
+            .addCase(fetchTV.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            });
+    },
 });
 
 

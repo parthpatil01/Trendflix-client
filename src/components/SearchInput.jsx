@@ -21,7 +21,6 @@ const SearchInput = ({ placeholder, onSearch, onClear,type }) => {
         setQuery(value);
         if(value.length===0){
             onClear();
-            console.log('herere')
         } 
     };
 

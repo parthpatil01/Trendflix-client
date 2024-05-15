@@ -46,7 +46,7 @@ function Home() {
     }
 
     if (status === 'succeeded') {
-
+        
         const firstSection = trending.slice(0, 6);
         const recommendation = trending.slice(8);
 
@@ -62,8 +62,8 @@ function Home() {
             setSearchResults([]);
         };
 
-        const handleOnClick = (itemId) => {
-            navigate(`/details?itemId=${itemId}`);
+        const handleOnClick = (itemId,type) => {
+            navigate(`/details?itemId=${itemId}&type=${type}`);
         }
 
         return (
@@ -86,11 +86,11 @@ function Home() {
 
                                 <GridItem
                                     key={index}
-                                    itemId={item.id}
+                                    item={item}
                                     location={173} //code for database location
-                                    imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                                    year={item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}
-                                    type={item.media_type}
+                                    imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path || item.poster_path}`}
+                                    year={(item.release_date && item.release_date.slice(0, 4)) || (item.first_air_date && item.first_air_date.slice(0, 4))}
+                                    type={item.first_air_date?'tv':'movie'}
                                     rating="PG"
                                     title={item.title || item.name}
                                     onDelete={handleDelete}
@@ -111,7 +111,7 @@ function Home() {
 
                                 {firstSection.map((item, index) => (
 
-                                    <div className="inline-block pe-8 relative cursor-pointer group" key={index} onClick={()=>handleOnClick(item.id)}>
+                                    <div className="inline-block pe-8 relative cursor-pointer group" key={index} onClick={()=>handleOnClick(item.id,item.first_air_date?'tv':'movie')}>
                                         <div
                                             className="w-[280px] h-[130px] md:w-[370px] md:h-[180px] overflow-hidden rounded-md bg-tertiary  "
                                         >
@@ -120,15 +120,15 @@ function Home() {
                                                 <img src={play} alt="play" className='h-[35px]' />
                                                 <span className='text-white px-4 font-semibold '>Play</span>
                                             </div>
-                                            <BookmarkButton itemId={item.id} location={111} onDelete={handleDelete} />
+                                            <BookmarkButton item={item} location={111} onDelete={handleDelete} />
                                         </div>
 
                                         <div className='absolute bottom-3 start-2' style={{ 'textShadow': '#444444 1px 0 10px' }}>
                                             <div className="text-[0.8rem] font-[500] text-white px-2 pt-1 ">
-                                                <span>{item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}</span>
+                                                <span>{item.release_date ? item.release_date.slice(0, 4) : item.first_air_date.slice(0, 4)}</span>
                                                 <span> • </span>
                                                 <div className='inline'>
-                                                    <img src={reel} alt="type" className='h-3 inline me-1' />{item.media_type}
+                                                    <img src={reel} alt="type" className='h-3 inline me-1' />{item.first_air_date?'tv':'movie'}
                                                 </div>
                                                 <span> • </span>
                                                 <span>{item.adult ? "PG" : "16+"}</span>
@@ -137,8 +137,6 @@ function Home() {
                                                 <span className="text-white text-lg px-2" >{item.title || item.name}</span>
                                             </div>
                                         </div>
-
-
 
                                     </div>
 
@@ -161,11 +159,11 @@ function Home() {
 
                                 <GridItem
                                     key={index}
-                                    itemId={item.id}
+                                    item={item}
                                     location={173} //code for database location
                                     imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                                    year={item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}
-                                    type={item.media_type}
+                                    year={item.release_date ? item.release_date.slice(0, 4) : item.first_air_date.slice(0, 4)}
+                                    type={item.first_air_date?'tv':'movie'}
                                     rating="PG"
                                     title={item.title || item.name}
                                     onDelete={handleDelete}

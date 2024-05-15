@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png'
-import {useNavigate } from "react-router-dom";
+import {useNavigate,Link } from "react-router-dom";
 import { useEffect } from 'react';
 import makeRequestWithToken from '../helper/makeRequestWithToken';
 
@@ -138,7 +138,7 @@ function SignUp() {
                     <button type="submit" disabled={submitting}  className="w-full px-2 py-3 mt-4 text-white bg-custom-red  rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-600">Create an Account</button>
                     <div className='flex items-center justify-center mt-6'>
                         <h1 className=' text-white'>Already have an account?</h1>
-                        <a className='text-custom-red mx-2 cursor-pointer'>Login</a>
+                        <Link to="/sign-in" className='text-custom-red mx-2 cursor-pointer'>Login</Link>
                     </div>
                 </form>
             </div>

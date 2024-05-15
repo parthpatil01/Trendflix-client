@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png'
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signIn } from "../slices/authSlice";
 import makeRequestWithToken from '../helper/makeRequestWithToken';
@@ -124,7 +124,7 @@ function SignIn() {
                     <button type="submit" disabled={submitting} className="w-full px-2 py-3 mt-4 text-white bg-custom-red  rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-600">Sign In</button>
                     <div className='flex items-center justify-center mt-6'>
                         <h1 className=' text-white'>Don't have an account?</h1>
-                        <a className='text-custom-red mx-2 cursor-pointer'>Sign Up</a>
+                        <Link to="/sign-up" className='text-custom-red mx-2 cursor-pointer'>Sign Up</Link>
                     </div>
                 </form>
             </div>

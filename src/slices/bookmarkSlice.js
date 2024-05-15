@@ -11,7 +11,18 @@ export const fetchBookmarks = createAsyncThunk(
             'POST',
             { email: email }
         );
-        return response.data;
+
+        const movies = [];
+        const tvSeries = [];
+        response.data.forEach(item => {
+            if (item.release_date) {
+                movies.push(item);
+            } else {
+                tvSeries.push(item);
+            }
+        });
+
+        return { movies, tvSeries };
     }
 );
 

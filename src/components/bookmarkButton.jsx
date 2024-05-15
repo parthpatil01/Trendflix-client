@@ -6,7 +6,7 @@ import makeRequestWithToken from '../helper/makeRequestWithToken';
 import { useNavigate } from "react-router-dom";
 
 
-const BookmarkButton = ({ itemId, location, onDelete }) => {
+const BookmarkButton = ({ item, location, onDelete }) => {
 
     const [isBookmarked, setIsBookmarked] = useState(false);
     const navigate = useNavigate();
@@ -24,15 +24,15 @@ const BookmarkButton = ({ itemId, location, onDelete }) => {
 
     const checkBookmarkStatus = async () => {
         try {
-            if (email && itemId) {
+            if (email && item) {
+                const itemId = item.id;
+                
                 const response = await makeRequestWithToken(
                     "/media/bookmarks",
                     'POST',
                     { email, itemId } // Sending email and itemID data
                 );
-                if (response.data.isBookmarked) {
-                    console.log(itemId)
-                }
+                
                 setIsBookmarked(response.data.isBookmarked);
             } else setIsBookmarked(false);
 
@@ -47,12 +47,18 @@ const BookmarkButton = ({ itemId, location, onDelete }) => {
         try {
 
             if (email) {
+                
+                const itemId = item.id
 
                 if (isBookmarked) {
                     await makeRequestWithToken(`/media/delete/${itemId}`, 'DELETE', { email });
+
+                    if(location!==172)
+                    setIsBookmarked(false)
+
                     onDelete(itemId);
                 } else {
-                    await makeRequestWithToken(`/media/addmedia`, 'POST', { email, itemId, location });
+                    await makeRequestWithToken(`/media/addmedia`, 'POST', { email, item, location });
                     setIsBookmarked(true)
                 }
                 

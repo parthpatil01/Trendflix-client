@@ -90,8 +90,8 @@ function Bookmarks() {
 
                                 <GridItem
                                     key={index}
-                                    itemId={item.id}
-                                    location={173} //code for database location
+                                    item={item}
+                                    location={172} //code for database location
                                     imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                                     year={item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}
                                     type={item.media_type}
@@ -122,8 +122,8 @@ function Bookmarks() {
 
                                         <GridItem
                                             key={index}
-                                            itemId={item.id}
-                                            location={173} //code for database location
+                                            item={item}
+                                            location={172} //code for database location
                                             imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                                             year={item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}
                                             type={item.media_type}
@@ -147,8 +147,8 @@ function Bookmarks() {
 
                                         <GridItem
                                             key={index}
-                                            itemId={item.id}
-                                            location={173} //code for database location
+                                            item={item}
+                                            location={172} //code for database location
                                             imageUrl={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
                                             year={item.release_date ? item.release_date.substring(0, 4) : item.first_air_date.substring(0, 4)}
                                             type={item.media_type}

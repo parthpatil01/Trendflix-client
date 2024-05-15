@@ -3,7 +3,7 @@ import tv from '../assets/tv.png'
 import reel from '../assets/reel.png'
 import home from '../assets/home.png'
 import bookmark from '../assets/bookmark.png'
-import profile from '../assets/profile.avif'
+import profile from '../assets/profile.jpg'
 import tvRed from '../assets/tv-red.png';
 import tvWhite from '../assets/tv-white.png';
 import reelRed from '../assets/reel-red.png';
