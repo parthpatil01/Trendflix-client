@@ -13,6 +13,7 @@ const BookmarkButton = ({ item, location, onDelete }) => {
     const { userData } = useSelector((state) => state.auth);
     let status = useSelector((state) => state.trending.status);
     const email = userData?.useremail;
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         
@@ -42,8 +43,9 @@ const BookmarkButton = ({ item, location, onDelete }) => {
     };
 
     const toggleBookmark = async (event) => {
+        console.log('clicked')
         event.stopPropagation();
-        
+        setIsLoading(true);
         try {
 
             if (email) {
@@ -58,6 +60,7 @@ const BookmarkButton = ({ item, location, onDelete }) => {
 
                     onDelete(itemId);
                 } else {
+                    console.log('herere')
                     await makeRequestWithToken(`/media/addmedia`, 'POST', { email, item, location });
                     setIsBookmarked(true)
                 }
@@ -70,12 +73,14 @@ const BookmarkButton = ({ item, location, onDelete }) => {
 
         } catch (error) {
             console.error('Error toggling bookmark:', error);
+        }finally {
+            setIsLoading(false);
         }
     };
 
     return (
 
-        <button onClick={toggleBookmark} className={`absolute m-2 p-1 bg-black bg-opacity-35 rounded-full ${location===111?'top-1 right-8 ' :'top-0 right-0' }`}>
+        <button onClick={toggleBookmark} disabled={isLoading} className={`absolute m-2 p-1 bg-black bg-opacity-35 rounded-full ${location===111?'top-1 right-8 ' :'top-0 right-0' }`}>
             <img src={isBookmarked ? bookmarkWhite : bookmarkOutline} alt="bookmark" className='h-[15px] w-[15px]' />
         </button>
     );

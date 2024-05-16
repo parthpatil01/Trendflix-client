@@ -26,14 +26,17 @@ const SearchInput = ({ placeholder, onSearch, onClear,type }) => {
 
     const handleKeyPress = (e) => {
         // Check if the "Enter" key is pressed
+        
         if (e.key === 'Enter' && query.length > 0) {
             // Fetch data from server when input changes
+            onClear();
             fetchData(query);
         }
     };
 
     const handleSearch = (e) => {
         if (query.length > 0) {
+            onClear();
             fetchData(query);
         }
     }
