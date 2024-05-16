@@ -123,7 +123,7 @@ function Home() {
                                             <BookmarkButton item={item} location={111} onDelete={handleDelete} />
                                         </div>
 
-                                        <div className='absolute bottom-3 start-2' style={{ 'textShadow': '#444444 1px 0 10px' }}>
+                                        <div className='absolute bottom-3 start-1 md:start-2' style={{ 'textShadow': '#444444 1px 0 10px' }}>
                                             <div className="text-[0.8rem] font-[500] text-white px-2 pt-1 ">
                                                 <span>{item.release_date ? item.release_date.slice(0, 4) : item.first_air_date.slice(0, 4)}</span>
                                                 <span> • </span>
@@ -133,7 +133,7 @@ function Home() {
                                                 <span> • </span>
                                                 <span>{item.adult ? "PG" : "16+"}</span>
                                             </div>
-                                            <div className='w-[370px] truncate'>
+                                            <div className='w-[280px] md:w-[370px] truncate'>
                                                 <span className="text-white text-lg px-2" >{item.title || item.name}</span>
                                             </div>
                                         </div>
