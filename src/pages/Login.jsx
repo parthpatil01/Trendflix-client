@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png'
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signIn } from "../slices/authSlice";
 import makeRequestWithToken from '../helper/makeRequestWithToken';
-
+import { ClipLoader } from 'react-spinners';
 
 
 function SignIn() {
@@ -14,6 +14,7 @@ function SignIn() {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -46,12 +47,16 @@ function SignIn() {
                 'POST',
                 { email, password } // Sending email and password data
             );
-            const { token, data } = response.data; // Assuming your backend returns a JWT token
-            dispatch(signIn({ token, data }));
-            resetForm(); // Reset form fields
-            setError(false);
-
-            navigate('/', { replace: true });
+            if (response.status === 200 || response.status === 201) {
+                const { token, data } = response.data; // Assuming your backend returns a JWT token
+                dispatch(signIn({ token, data }));
+                resetForm(); // Reset form fields
+                setError(false);
+                navigate('/', { replace: true });
+            } else {
+                setError(true);
+                setErrorMessage('Failed to login');
+            }
 
         } catch (error) {
             console.error("Error:", error);
@@ -121,7 +126,7 @@ function SignIn() {
                     </div>
 
                     {error && <p className="text-red-500">{errorMessage}</p>}
-                    <button type="submit" disabled={submitting} className="w-full px-2 py-3 mt-4 text-white bg-custom-red  rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-600">Sign In</button>
+                    <button type="submit" disabled={submitting} className="w-full px-2 py-3 mt-4 text-white bg-custom-red  rounded-md hover:bg-red-500 focus:outline-none focus:bg-red-600">{submitting ? <ClipLoader size={18} color={"#fff"} /> : 'Sign In'}</button>
                     <div className='flex items-center justify-center mt-6'>
                         <h1 className=' text-white'>Don't have an account?</h1>
                         <Link to="/sign-up" className='text-custom-red mx-2 cursor-pointer'>Sign Up</Link>

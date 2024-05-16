@@ -14,6 +14,7 @@ function Deatails() {
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
   const type = searchParams.get('type');
+  const [loading, setLoading] = useState(true);
 
   const [movieDetails, setMovieDetails] = useState(null);
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ function Deatails() {
       setMovieDetails(response.data);
     } catch (error) {
       console.error('Error fetching movie details:', error);
+    }finally {
+      setLoading(false);
     }
   };
 
@@ -33,8 +36,12 @@ function Deatails() {
 
   }, [itemId]);
 
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">Loading...</p></div>;
+  }
+
   if (!movieDetails) {
-    return <div>Loading...</div>;
+    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">No details available</p></div>;
   }
 
   console.log(movieDetails)
