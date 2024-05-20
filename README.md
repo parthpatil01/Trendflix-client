@@ -30,13 +30,14 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 ## Installation
 To get started with the project, follow these steps:
 
-1. Clone the repository:
-  git clone https://github.com/your-username/entertainment-app-client.git
+#### 1. Clone this repository to your local machine.
+    https://github.com/parthpatil01/entertainment-app-client.git
+#### 2. Install dependencies using npm: 
+    npm install
+#### 3. Environment Variables: 
+    
+    VITE_APP_API_URL=http://localhost:5000/api 
+   
+####  4. Start the server:
+    npm run dev
 
-2. Install the dependencies:
-  npm install  
-
-#### Environment Variables
-Before running the app, make sure to set up the necessary environment variables. Create a .env file in the root of your project directory and add the required variables. 
-
-VITE_APP_API_URL= enter your backend url here
