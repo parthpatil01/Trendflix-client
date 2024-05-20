@@ -43,23 +43,23 @@ To get started with the project, follow these steps:
     
 ## Project Structure
 Here is an overview of the project structure:
-
-entertainment-app-client/ <br />
-├── public/ <br />
-│   ├── index.html <br />
-│   └── ... <br />
-├── src/ <br />
-│   ├── assets/ <br />
-│   │   ├── ... <br />
-│   ├── components/ <br />
-│   │   ├── BookmarButton.jsx <br />
-│   │   ├── GridItem.jsx <br />
-|   |   ├── SearchInput.jsx <br />
-|   |   ├── SearchProp.jsx <br />
-│   ├── helper/ <br />
-│   │   ├── makeRequestWithToeken.js <br />
-│   ├── pages/ <br />
-│   │   ├── Bookmarks.jsx <br />
+```bash
+entertainment-app-client/ 
+├── public/ 
+│   ├── index.html 
+│   └── ... 
+├── src/ 
+│   ├── assets/ 
+│   │   ├── ... 
+│   ├── components/ 
+│   │   ├── BookmarButton.jsx 
+│   │   ├── GridItem.jsx
+|   |   ├── SearchInput.jsx 
+|   |   ├── SearchProp.jsx 
+│   ├── helper/ 
+│   │   ├── makeRequestWithToeken.js 
+│   ├── pages/ 
+│   │   ├── Bookmarks.jsx 
 │   │   ├── Details.jsx
 │   │   ├── Home.jsx
 │   │   ├── HomePage.jsx
@@ -83,5 +83,6 @@ entertainment-app-client/ <br />
 ├── package.json
 ├── package-lock.json
 └── ...
+```
 
 
