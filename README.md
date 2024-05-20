@@ -1,8 +1,35 @@
-# React + Vite
+# Table of Contents
+* Features
+* Technologies Used
+* Installation
+* Running the App
+* Project Structure
+* Usage
+* Contributing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
+* Trending and Recommended Shows: View the latest and recommended TV series and movies.
+* TV Series and Movies Pages: Separate pages to explore TV series and movies.
+* Bookmarking: Bookmark your favorite shows and movies.
+* User Authentication: Login and signup functionality to personalize user experience.
+* Infinite Scroll: Smooth infinite scrolling for content lists.
 
-Currently, two official plugins are available:
+## Technologies Used
+* React: JavaScript library for building user interfaces.
+* Redux: State management library for React applications.
+* React-Router-Dom: Declarative routing for React applications.
+* React Hooks: Modern way to use state and lifecycle features in functional components.
+* Tailwind CSS: Utility-first CSS framework for styling.
+* React Icons: Collection of popular icons for React.
+* React Infinite Scroll: Component for implementing infinite scrolling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
+To get started with the project, follow these steps:
+
+1. Clone the repository:
+
+   git clone https://github.com/your-username/entertainment-app-client.git
+
+2. Install the dependencies:
+
+   npm install  
