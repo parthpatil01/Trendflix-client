@@ -18,7 +18,8 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 #### TV Series and Movies Pages: Separate pages to explore TV series and movies. 
 #### Bookmarking: Bookmark your favorite shows and movies. 
 #### User Authentication: Login and signup functionality to personalize user experience. 
-#### Infinite Scroll: Smooth infinite scrolling for content lists. <br/>
+#### Infinite Scroll: Smooth infinite scrolling for content lists. 
+#### Search: Find your favorite TV series or movies by title. <br/>
 
 ## Technologies Used
 * React
