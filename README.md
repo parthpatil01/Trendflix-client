@@ -19,13 +19,13 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 * Infinite Scroll: Smooth infinite scrolling for content lists.
 
 ## Technologies Used
-* React: JavaScript library for building user interfaces.
-* Redux: State management library for React applications.
-* React-Router-Dom: Declarative routing for React applications.
-* React Hooks: Modern way to use state and lifecycle features in functional components.
-* Tailwind CSS: Utility-first CSS framework for styling.
-* React Icons: Collection of popular icons for React.
-* React Infinite Scroll: Component for implementing infinite scrolling.
+* React
+* Redux
+* React-Router-Dom
+* React Hooks
+* Tailwind CSS
+* React Icons
+* React Infinite Scroll
 
 ## Installation
 To get started with the project, follow these steps:
@@ -85,4 +85,16 @@ entertainment-app-client/
 └── ...
 ```
 
-
+## Usage
+### Homepage
+#### Trending and Recommended: Displays trending and recommended TV series and movies.
+#### Bookmarking: Click the bookmark icon on any show or movie to add it to your bookmarks.
+### TV Series and Movies Pages
+#### Browse through a list of TV series or movies with infinite scroll.
+### Bookmarks
+#### View all your bookmarked shows and movies on the Bookmarks page.
+### Authentication
+#### Login: Access the login page to sign in with your credentials.
+#### Signup: Register a new account using the signup page.
+### Search
+#### Search Functionality: Use the search bar to find your favorite TV series or movies by title.
