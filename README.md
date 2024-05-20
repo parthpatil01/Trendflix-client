@@ -2,6 +2,8 @@
 
 Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
+#### Live link: entertainment-app-9jvl.onrender.com
+
 ## Table of Contents
 * Features 
 * Technologies Used 
@@ -98,3 +100,11 @@ entertainment-app-client/
  Signup: Register a new account using the signup page.
 ### Search
  Search Functionality: Use the search bar to find your favorite TV series or movies by title.
+
+ ## Screenshots
+ ![homepage](https://imgur.com/rIrNuPb.png)
+ ![movies](https://imgur.com/nCHVLod.png)
+ ![search](https://imgur.com/nL0xuO2)
+ ![tvseries](https://imgur.com/trn93Gx)
+ ![bookmarks](https://imgur.com/xV7tpC1)
+ ![signup](https://imgur.com/Xnh00JS)
