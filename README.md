@@ -104,7 +104,7 @@ entertainment-app-client/
  ## Screenshots
  ![homepage](https://imgur.com/rIrNuPb.png)
  ![movies](https://imgur.com/nCHVLod.png)
- ![search](https://imgur.com/nL0xuO2)
- ![tvseries](https://imgur.com/trn93Gx)
- ![bookmarks](https://imgur.com/xV7tpC1)
- ![signup](https://imgur.com/Xnh00JS)
+ ![search](https://imgur.com/nL0xuO2.png)
+ ![tvseries](https://imgur.com/trn93Gx.png)
+ ![bookmarks](https://imgur.com/xV7tpC1.png)
+ ![signup](https://imgur.com/Xnh00JS.png)
