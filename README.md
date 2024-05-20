@@ -3,20 +3,20 @@
 Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
 ## Table of Contents
- Features <br/>
-Technologies Used <br/>
-Installation <br/>
- Running the App <br/>
- Project Structure <br/>
-Usage <br/>
- Contributing <br/>
+* Features 
+* Technologies Used 
+* Installation
+* Running the App 
+* Project Structure 
+* Usage 
+* Contributing 
 
 ## Features
- Trending and Recommended Shows: View the latest and recommended TV series and movies. <br/>
- TV Series and Movies Pages: Separate pages to explore TV series and movies. <br/>
- Bookmarking: Bookmark your favorite shows and movies. <br/>
- User Authentication: Login and signup functionality to personalize user experience. <br/>
- Infinite Scroll: Smooth infinite scrolling for content lists. <br/>
+* Trending and Recommended Shows: View the latest and recommended TV series and movies. <br/>
+* TV Series and Movies Pages: Separate pages to explore TV series and movies. <br/>
+* Bookmarking: Bookmark your favorite shows and movies. <br/>
+* User Authentication: Login and signup functionality to personalize user experience. <br/>
+* Infinite Scroll: Smooth infinite scrolling for content lists. <br/>
 
 ## Technologies Used
 * React
@@ -87,14 +87,14 @@ entertainment-app-client/
 
 ## Usage
 ### Homepage
- Trending and Recommended: Displays trending and recommended TV series and movies.
- Bookmarking: Click the bookmark icon on any show or movie to add it to your bookmarks.
+ Trending and Recommended: Displays trending and recommended TV series and movies. <br/>
+ Bookmarking: Click the bookmark icon on any show or movie to add it to your bookmarks. 
 ### TV Series and Movies Pages
  Browse through a list of TV series or movies with infinite scroll.
 ### Bookmarks
  View all your bookmarked shows and movies on the Bookmarks page.
 ### Authentication
- Login: Access the login page to sign in with your credentials.
+ Login: Access the login page to sign in with your credentials. <br/>
  Signup: Register a new account using the signup page.
 ### Search
  Search Functionality: Use the search bar to find your favorite TV series or movies by title.
