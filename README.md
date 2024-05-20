@@ -38,6 +38,50 @@ To get started with the project, follow these steps:
     
     VITE_APP_API_URL=http://localhost:5000/api 
    
-####  4. Start the server:
+####  4. Start the app:
     npm run dev
+    
+## Project Structure
+Here is an overview of the project structure:
+
+entertainment-app-client/
+├── public/
+│   ├── index.html
+│   └── ...
+├── src/
+│   ├── assets/
+│   │   ├── ...
+│   ├── components/
+│   │   ├── BookmarButton.jsx
+│   │   ├── GridItem.jsx
+|   |   ├── SearchInput.jsx
+|   |   ├── SearchProp.jsx
+│   ├── helper/
+│   │   ├── makeRequestWithToeken.js
+│   ├── pages/
+│   │   ├── Bookmarks.jsx
+│   │   ├── Details.jsx
+│   │   ├── Home.jsx
+│   │   ├── HomePage.jsx
+│   │   ├── Login.jsx
+│   │   ├── Movies.jsx
+│   │   ├── Signup.jsx
+│   │   ├── TvSeries.jsx
+│   ├── reducer/
+│   │   ├── index.js
+│   ├── slices/
+│   │   ├── authSlice.js
+│   │   ├── bookmarkSlice.js
+│   │   ├── moviesSlice.js
+│   │   ├── trendingSlice.js
+│   │   ├── tvseriesSlice.js
+│   ├── App.js
+│   ├── main.jsx
+├── tailwind.config.js
+├── vite.config.js
+├── postcss.config.js
+├── package.json
+├── package-lock.json
+└── ...
+
 
