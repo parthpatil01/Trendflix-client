@@ -14,7 +14,7 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 * Contributing 
 
 ## Features
-#### Trending and Recommended Shows: View the latest and recommended TV series and movies. 
+==Trending and Recommended Shows: View the latest and recommended TV series and movies.==
 #### TV Series and Movies Pages: Separate pages to explore TV series and movies. 
 #### Bookmarking: Bookmark your favorite shows and movies. 
 #### User Authentication: Login and signup functionality to personalize user experience. 
@@ -107,4 +107,7 @@ entertainment-app-client/
  ![search](https://imgur.com/nL0xuO2.png)
  ![tvseries](https://imgur.com/trn93Gx.png)
  ![bookmarks](https://imgur.com/xV7tpC1.png)
- ![signup](https://imgur.com/Xnh00JS.png)
+ ![signup](https://imgur.com/rszQNQN.png)
+ ![signin](https://imgur.com/Xnh00JS.png)
+ 
+ 
