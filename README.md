@@ -11,7 +11,7 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 * Running the App 
 * Project Structure 
 * Usage 
-* Contributing 
+* Screenshots 
 
 ## Features
 #### Trending and Recommended Shows: View the latest and recommended TV series and movies.
