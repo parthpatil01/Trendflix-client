@@ -1,4 +1,8 @@
-# Table of Contents
+# Entertainment App Client
+
+Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
+
+## Table of Contents
 * Features
 * Technologies Used
 * Installation
@@ -27,9 +31,12 @@
 To get started with the project, follow these steps:
 
 1. Clone the repository:
-
-   git clone https://github.com/your-username/entertainment-app-client.git
+  git clone https://github.com/your-username/entertainment-app-client.git
 
 2. Install the dependencies:
+  npm install  
 
-   npm install  
+#### Environment Variables
+Before running the app, make sure to set up the necessary environment variables. Create a .env file in the root of your project directory and add the required variables. 
+
+VITE_APP_API_URL= enter your backend url here
