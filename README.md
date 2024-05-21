@@ -2,7 +2,8 @@
 
 Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
-#### Live link: entertainment-app-9jvl.onrender.com
+#### Live link: 
+entertainment-app-9jvl.onrender.com
 
 ## Table of Contents
 * Features 
