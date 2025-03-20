@@ -91,6 +91,7 @@ function Homepage() {
 
     return (
         <div className="flex flex-col lg:flex-row">
+            
             <div className="left lg:h-screen px-5 py-6">
                 <div className="bg-secondary py-4 lg:py-0 px-6 lg:px-0 flex flex-row lg:flex-col lg:h-full lg:w-[70px] rounded-lg items-center">
 
@@ -122,6 +123,7 @@ function Homepage() {
 
                 </div>
             </div >
+
             <div className="right flex flex-col lg:py-8 ps-3 lg:ps-2 h-screen lg:overflow-y-auto">
 
                 {renderTabContent()}
