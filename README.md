@@ -2,7 +2,7 @@
 
 Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
-#### Live link: https://trendflix.onrender.com (PLEASE NOTE: Since its hosted on free account it'll take 2 mins to start the server)
+#### Live link: https://trendflix.onrender.com
 
 ## Table of Contents
 * Features 
