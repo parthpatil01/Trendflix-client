@@ -1,6 +1,6 @@
 # Entertainment App Client
 
-Welcome to the Entertainment App Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
+Welcome to the Trendflix Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
 #### Live link: https://trendflix.onrender.com
 
@@ -34,7 +34,7 @@ Welcome to the Entertainment App Client! This README will guide you through the 
 To get started with the project, follow these steps:
 
 #### 1. Clone this repository to your local machine.
-    https://github.com/parthpatil01/entertainment-app-client.git
+    https://github.com/parthpatil01/Trendflix-client.git
 #### 2. Install dependencies using npm: 
     npm install
 #### 3. Environment Variables: 
@@ -47,7 +47,7 @@ To get started with the project, follow these steps:
 ## Project Structure
 Here is an overview of the project structure:
 ```bash
-entertainment-app-client/ 
+Trendflix-client/ 
 ├── public/ 
 │   ├── index.html 
 │   └── ... 
