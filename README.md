@@ -1,4 +1,4 @@
-# Entertainment App Client
+# Trendflix Client
 
 Welcome to the Trendflix Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
