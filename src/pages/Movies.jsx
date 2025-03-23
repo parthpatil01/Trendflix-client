@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMovies } from '../slices/moviesSlice';
 import SearchProp from '../components/searchProp';
 
-import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function Movies() {

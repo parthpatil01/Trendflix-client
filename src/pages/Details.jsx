@@ -6,7 +6,7 @@ import logo from '../assets/logo.png'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import makeRequestWithToken from '../helper/makeRequestWithToken';
 
 function Deatails() {
 
@@ -21,7 +21,7 @@ function Deatails() {
 
   const fetchMovieDetails = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/data/details?itemId=${itemId}&type=${type}`);
+      const response = await makeRequestWithToken(`/data/details?itemId=${itemId}&type=${type}`,'GET');
       setMovieDetails(response.data);
     } catch (error) {
       console.error('Error fetching movie details:', error);

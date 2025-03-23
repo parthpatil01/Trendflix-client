@@ -5,7 +5,6 @@ import clearIcon from '../assets/clear.png'
 import '../components/circular.css'
 import makeRequestWithToken from '../helper/makeRequestWithToken';
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 
 const SearchInput = ({ placeholder, onSearch, onClear,type }) => {
 
@@ -54,7 +53,8 @@ const SearchInput = ({ placeholder, onSearch, onClear,type }) => {
             if(type==='bookmark'){
                 response = await makeRequestWithToken(`/media/search?q=${value}`,"POST",{email:userData?.useremail})
             }else {
-                response = await axios.get(`${baseUrl}/data/search?q=${value}&type=${type}`);
+                response = await makeRequestWithToken(`/data/search?q=${value}&type=${type}`,'GET');
+                console.log("second");
             }
             
             const data = await response.data;
