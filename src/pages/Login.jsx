@@ -3,9 +3,20 @@ import logo from '../assets/logo.png'
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signIn } from "../slices/authSlice";
-import makeRequestWithToken from '../helper/makeRequestWithToken';
 import { ClipLoader } from 'react-spinners';
+import { gql, useMutation } from '@apollo/client';
 
+const LOGIN_USER = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      token
+      message
+      data {
+        useremail
+      }
+    }
+  }
+`;
 
 function SignIn() {
 
@@ -14,64 +25,64 @@ function SignIn() {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [loginUser, { loading, error: mutationError }] = useMutation(LOGIN_USER);
 
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-        setSubmitting(true); // Set submitting to true when form is being submitted
-
-        // Email validation
+        setSubmitting(true);
+        setError(false);
+        setErrorMessage('');
+    
         if (!isValidEmail(email)) {
             setError(true);
             setErrorMessage('Invalid Email');
             setSubmitting(false);
             return;
         }
-
-        // Password validation
+    
         if (password.length < 8) {
             setError(true);
-            setErrorMessage('Passlength must be atleast 8 characters');
+            setErrorMessage('Password must be at least 8 characters long');
             setSubmitting(false);
             return;
         }
-
-        // Form submission logic 
+    
         try {
-            let response = await makeRequestWithToken(
-                "/user/login",
-                'POST',
-                { email, password } // Sending email and password data
-            );
-            if (response.status === 200 || response.status === 201) {
-                const { token, data } = response.data; // Assuming your backend returns a JWT token
-                dispatch(signIn({ token, data }));
-                resetForm(); // Reset form fields
-                setError(false);
+            const { data } = await loginUser({ variables: { email, password } });
+    
+            if (data?.loginUser?.token) {
+                const { token, data: userData } = data.loginUser;
+    
+                // Dispatch Redux action & store in localStorage
+                dispatch(signIn({ token, data: userData }));
+                resetForm();
                 navigate('/', { replace: true });
             } else {
                 setError(true);
-                setErrorMessage('Failed to login');
+                setErrorMessage('Login failed. Please try again.');
             }
-
         } catch (error) {
-            console.error("Error:", error);
-            if (error.response.status === 404 || error.response.status === 401) {
+            console.error("GraphQL Error:", error);
+    
+            if (error.graphQLErrors?.length > 0) {
                 setError(true);
-                setErrorMessage('User does not exist or invalid credentials.'); // Set error message for user not found or invalid credentials
+                setErrorMessage(error.graphQLErrors[0].message || 'An error occurred.');
+            } else if (error.networkError) {
+                setError(true);
+                setErrorMessage('Network error. Please check your connection.');
             } else {
                 setError(true);
-                setErrorMessage('An error occurred while processing your request.');
+                setErrorMessage('An unexpected error occurred.');
             }
         } finally {
-            setSubmitting(false); // Reset submitting state regardless of success or failure
+            setSubmitting(false);
         }
-
     };
+    
 
     const isValidEmail = (email) => {
         // Basic email validation regex

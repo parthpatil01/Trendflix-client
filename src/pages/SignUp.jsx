@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import logo from '../assets/logo.png'
 import {useNavigate,Link } from "react-router-dom";
 import { useEffect } from 'react';
-import makeRequestWithToken from '../helper/makeRequestWithToken';
 import { ClipLoader } from 'react-spinners';
+import { gql, useMutation } from '@apollo/client';
 
+const REGISTER_USER = gql`
+  mutation RegisterUser($email: String!, $password: String!) {
+    registerUser(email: $email, password: $password) {
+      message
+    }
+  }
+`;
 
 
 function SignUp() {
@@ -17,60 +24,61 @@ function SignUp() {
     const [errorMessage,setErrorMessage] = useState('');
     const navigate = useNavigate();
 
+    const [registerUser, { data, loading, err }] = useMutation(REGISTER_USER);
+
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-        setSubmitting(true); // Set submitting to true when form is being submitted
-
-        // Email validation
+        setSubmitting(true);
+        setError(false);
+        setErrorMessage('');
+    
         if (!isValidEmail(email)) {
             setError(true);
             setErrorMessage('Invalid Email');
-            setSubmitting(false); 
+            setSubmitting(false);
             return;
         }
-
-        // Password validation
+    
         if (password.length < 8) {
             setError(true);
-            setErrorMessage('Passlength must be atleast 8 characters');
-            setSubmitting(false); 
+            setErrorMessage('Password must be at least 8 characters long');
+            setSubmitting(false);
             return;
         }
-
-        // Repeat password validation
+    
         if (password !== confirmPassword) {
             setError(true);
             setErrorMessage('Passwords did not match');
-            setSubmitting(false); 
+            setSubmitting(false);
             return;
         }
-
-        // Form submission logic 
+    
         try {
-            
-            let response = await makeRequestWithToken(
-                "/user/register",
-                'POST',
-                { email, password } // Sending email and password data
-            );
-            resetForm(); // Reset form fields
-            setError(false);
-            navigate('/sign-in'); // Navigate to signin page upon successful submission
+            const { data } = await registerUser({ variables: { email, password } });
+    
+            if (data?.registerUser?.message) {
+                alert(data.registerUser.message);
+                resetForm();
+                navigate('/sign-in');
+            }
         } catch (error) {
-            console.error("Error:", error);
-            if (error.response.status === 409) {
-                setError(true); // Set userExists state if user already exists
-                setErrorMessage('User already exists. Use different email.');
+            console.error("GraphQL Error:", error);
+    
+            if (error.graphQLErrors?.length > 0) {
+                setError(true);
+                setErrorMessage(error.graphQLErrors[0].message || 'An error occurred.');
+            } else if (error.networkError) {
+                setError(true);
+                setErrorMessage('Network error. Please check your connection.');
             } else {
-                setError(true); // Set userExists state if user already exists
-                setErrorMessage('An error occurred while processing your request.');
+                setError(true);
+                setErrorMessage('An unexpected error occurred.');
             }
         } finally {
-            setSubmitting(false); // Reset submitting state regardless of success or failure
+            setSubmitting(false);
         }
-
     };
+    
 
     const isValidEmail = (email) => {
         // Basic email validation regex
