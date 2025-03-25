@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login'
 import Details from './pages/Details';
-import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   
@@ -18,7 +17,6 @@ function App() {
           <Route path="/sign-in" element={<Login />} />
           <Route path="/details" element={<Details />} />
         </Routes>
-        <Analytics />
       </div>
 
     </Router>
