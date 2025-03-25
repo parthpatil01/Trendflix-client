@@ -4,7 +4,7 @@ import { setContext } from '@apollo/client/link/context';
 
 // HTTP connection to the backend
 const httpLink = createHttpLink({
-  uri: 'http://localhost:5000/graphql', // Replace with your backend URL
+  uri: `${import.meta.env.VITE_APP_API_URL}`, // Replace with your backend URL
 });
 
 // Add the Authorization header to requests
