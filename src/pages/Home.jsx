@@ -108,45 +108,45 @@ function Home() {
                         <ScrollContainer className="scroll-container w-[100%] mt-4">
                             <div className="flex flex-nowrap">
                                 {firstSection.map((item, index) => (
-                                    <Link
-                                        to={`/details?itemId=${item.id}&type=${item.first_air_date ? 'tv' : 'movie'}`}
-                                        className="inline-block pe-8 relative group"
-                                        key={index}
-                                    >
-                                        <div className="w-[280px] h-[130px] md:w-[370px] md:h-[180px] overflow-hidden rounded-md bg-tertiary">
-                                            <img
-                                                src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
-                                                alt={item.title || item.name}
-                                                className="w-full h-full object-cover"
-                                            />
-                                            <div className='absolute h-fit w-fit top-[35%] left-[30%] p-1 rounded-full inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-15 transition-opacity group-hover:opacity-100'>
-                                                <img src={play} alt="play" className='h-[35px]' />
-                                                <span className='text-white px-4 font-semibold'>Play</span>
-                                            </div>
-                                            <BookmarkButton
-                                                item={item}
-                                                location={111}
-                                                onDelete={handleDelete}
-                                                onClick={(e) => e.preventDefault()} // Prevent navigation when clicking bookmark
-                                            />
-                                        </div>
-
-                                        <div className='absolute bottom-3 start-1 md:start-2' style={{ textShadow: '#444444 1px 0 10px' }}>
-                                            <div className="text-[0.8rem] font-[500] text-white px-2 pt-1">
-                                                <span>{item.release_date?.slice(0, 4) || item.first_air_date?.slice(0, 4)}</span>
-                                                <span> • </span>
-                                                <div className='inline'>
-                                                    <img src={reel} alt="type" className='h-3 inline me-1' />
-                                                    {item.first_air_date ? 'tv' : 'movie'}
+                                    <div className="inline-block pe-8 relative group" key={index}>
+                                        <Link
+                                            to={`/details?itemId=${item.id}&type=${item.first_air_date ? 'tv' : 'movie'}`}
+                                            className="block"
+                                        >
+                                            <div className="w-[280px] h-[130px] md:w-[370px] md:h-[180px] overflow-hidden rounded-md bg-tertiary">
+                                                <img
+                                                    src={`https://image.tmdb.org/t/p/original/${item.backdrop_path}`}
+                                                    alt={item.title || item.name}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                                <div className='absolute h-fit w-fit top-[35%] left-[30%] p-1 rounded-full inset-0 flex items-center justify-center opacity-0 bg-black bg-opacity-15 transition-opacity group-hover:opacity-100'>
+                                                    <img src={play} alt="play" className='h-[35px]' />
+                                                    <span className='text-white px-4 font-semibold'>Play</span>
                                                 </div>
-                                                <span> • </span>
-                                                <span>{item.adult ? "16+" : "PG"}</span>
                                             </div>
-                                            <div className='w-[280px] md:w-[370px] truncate'>
-                                                <span className="text-white text-lg px-2">{item.title || item.name}</span>
+
+                                            <div className='absolute bottom-3 start-1 md:start-2' style={{ textShadow: '#444444 1px 0 10px' }}>
+                                                <div className="text-[0.8rem] font-[500] text-white px-2 pt-1">
+                                                    <span>{item.release_date?.slice(0, 4) || item.first_air_date?.slice(0, 4)}</span>
+                                                    <span> • </span>
+                                                    <div className='inline'>
+                                                        <img src={reel} alt="type" className='h-3 inline me-1' />
+                                                        {item.first_air_date ? 'tv' : 'movie'}
+                                                    </div>
+                                                    <span> • </span>
+                                                    <span>{item.adult ? "16+" : "PG"}</span>
+                                                </div>
+                                                <div className='w-[280px] md:w-[370px] truncate'>
+                                                    <span className="text-white text-lg px-2">{item.title || item.name}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                        <BookmarkButton
+                                            item={item}
+                                            location={111}
+                                            onDelete={handleDelete}
+                                        />
+                                    </div>
                                 ))}
                             </div>
                         </ScrollContainer>
