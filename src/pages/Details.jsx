@@ -3,48 +3,63 @@ import { faStar, faStarHalfAlt, faArrowLeft, faLink, faTicket } from '@fortaweso
 import { faStar as faStarOutline } from '@fortawesome/free-regular-svg-icons'
 import logo from '../assets/logo.png'
 
-import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import makeRequestWithToken from '../helper/makeRequestWithToken';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
 
-function Deatails() {
+// GraphQL query for fetching details
+const GET_MOVIE_DETAILS = gql`
+  query GetDetails($itemId: Int!, $type: String!) {
+    details(itemId: $itemId, type: $type) {
+      detail {
+        poster_path
+        original_name
+        name
+        title
+        original_title
+        vote_average
+        runtime
+        episode_run_time
+        release_date
+        first_air_date
+        last_air_date
+        status
+        original_language
+        genres {
+          name
+        }
+        overview
+        created_by {
+          name
+          original_name
+        }
+        homepage
+        imdb_id
+      }
+      cast {
+        cast {
+          name
+        }
+        crew {
+          name
+          job
+        }
+      }
+    }
+  }
+`;
 
+function Details() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const itemId = searchParams.get('itemId');
   const type = searchParams.get('type');
-  const [loading, setLoading] = useState(true);
-
-  const [movieDetails, setMovieDetails] = useState(null);
   const navigate = useNavigate();
 
-  const fetchMovieDetails = async () => {
-    try {
-      const response = await makeRequestWithToken(`/data/details?itemId=${itemId}&type=${type}`,'GET');
-      setMovieDetails(response.data);
-    } catch (error) {
-      console.error('Error fetching movie details:', error);
-    }finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-
-    fetchMovieDetails();
-
-  }, [itemId]);
-
-  if (loading) {
-    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">Loading...</p></div>;
-  }
-
-  if (!movieDetails) {
-    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">No details available</p></div>;
-  }
-
-  console.log(movieDetails)
+  // Apollo Client query hook
+  const { loading, error, data } = useQuery(GET_MOVIE_DETAILS, {
+    variables: { itemId: parseInt(itemId), type },
+    skip: !itemId || !type, // Skip if params are missing
+  });
 
   const mapLanguage = (code) => {
     const languageMap = {
@@ -57,21 +72,31 @@ function Deatails() {
       ar: 'Arabic',
       pt: 'Portuguese',
       ru: 'Russian',
-      // Add more languages as needed
     };
-
-    return languageMap[code] || code; // Return language name or code if not found in the map
+    return languageMap[code] || code;
   };
 
   const handleBackButtonClick = () => {
-    // Handle the back button click event here
-    // For example, you can navigate back or perform any other action
     navigate(-1);
-    console.log('Back button clicked!');
+  };
+
+  if (loading) {
+    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">Loading...</p></div>;
   }
+
+  if (error) {
+    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">Error: {error.message}</p></div>;
+  }
+
+  if (!data?.details) {
+    return <div className="flex justify-center items-center h-screen"><p className="text-white text-2xl">No details available</p></div>;
+  }
+
+  const movieDetails = data.details;
 
   return (
     <div className="flex flex-col lg:flex-row">
+      {/* Left sidebar */}
       <div className="left lg:h-screen px-5 py-6">
         <div className="bg-secondary py-4 lg:py-0 px-6 lg:px-0 flex flex-row lg:flex-col lg:h-full lg:w-[70px] rounded-lg items-center">
           <img src={logo} alt="logo" className='h-[25px] w-[25px] lg:mt-6 self-center hidden lg:block' />
@@ -79,17 +104,25 @@ function Deatails() {
             <FontAwesomeIcon icon={faArrowLeft} />
           </button>
         </div>
-      </div >
+      </div>
+
+      {/* Main content */}
       <div className="right flex flex-col lg:py-8 px-6 h-screen lg:overflow-y-auto">
         <div className="h-full flex flex-col lg:flex-row justify-around text-white">
-
           <div className="self-center">
-            <img src={`https://image.tmdb.org/t/p/original/${movieDetails.detail.poster_path}`} className='rounded-md max-h-[650px] w-[400px] shadow-md' alt="Image" />
+            <img 
+              src={`https://image.tmdb.org/t/p/original/${movieDetails.detail.poster_path}`} 
+              className='rounded-md max-h-[650px] w-[400px] shadow-md' 
+              alt="Movie poster" 
+            />
           </div>
 
           <div className="lg:w-[50%] mt-8 lg:mt-4">
-
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light">{movieDetails.detail.original_name || movieDetails.detail.name || movieDetails.detail.title || movieDetails.detail.original_title}</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-light">
+              {movieDetails.detail.original_name || movieDetails.detail.name || movieDetails.detail.title || movieDetails.detail.original_title}
+            </h1>
+            
+            {/* Rating */}
             <div className='flex mt-6'>
               <h1 className='text-3xl mr-4 font-semibold'>{(movieDetails.detail.vote_average / 2).toFixed(2)}</h1>
               {[...Array(5)].map((_, index) => (
@@ -103,57 +136,87 @@ function Deatails() {
                   )}
                 </span>
               ))}
-
             </div>
+
+            {/* Details table */}
             <table className="table-auto w-full mt-6">
               <tbody>
                 <tr>
                   <td className="font-semibold pr-4 text-xl text-gray-400">Length</td>
-                  <td className="font-semibold pr-4 text-xl text-gray-400"> Year</td>
+                  <td className="font-semibold pr-4 text-xl text-gray-400">Year</td>
                   <td className="font-semibold pr-4 text-xl text-gray-400">Status</td>
                   <td className="font-semibold pr-4 text-xl text-gray-400">Language</td>
-
                 </tr>
                 <tr>
-                  <td className="pr-4">{(movieDetails.detail.runtime || movieDetails.detail.episode_run_time) === undefined ? 'N/A' : `${movieDetails.detail.runtime || movieDetails.detail.episode_run_time[0]} min`} </td>
-
-                  <td className="pr-4">{(movieDetails.detail.release_date || movieDetails.detail.first_air_date).slice(0, 4)}
-
-                    {movieDetails.detail.last_air_date && ( movieDetails.detail.status === 'Returning Series' ? ' - present' : ` - ${movieDetails.detail.last_air_date.slice(0, 4)}`)}
+                  <td className="pr-4">
+                    {(movieDetails.detail.runtime || movieDetails.detail.episode_run_time) === undefined 
+                      ? 'N/A' 
+                      : `${movieDetails.detail.runtime || movieDetails.detail.episode_run_time[0]} min`}
+                  </td>
+                  <td className="pr-4">
+                    {(movieDetails.detail.release_date || movieDetails.detail.first_air_date).slice(0, 4)}
+                    {movieDetails.detail.last_air_date && (
+                      movieDetails.detail.status === 'Returning Series' 
+                        ? ' - present' 
+                        : ` - ${movieDetails.detail.last_air_date.slice(0, 4)}`
+                    )}
                   </td>
                   <td className="pr-4">{movieDetails.detail.status}</td>
                   <td className="pr-4">{mapLanguage(movieDetails.detail.original_language)}</td>
                 </tr>
               </tbody>
             </table>
+
+            {/* Genres */}
             <h1 className='mt-6 text-xl font-medium'>Genres</h1>
             <div className='text-black flex flex-wrap mt-3'>
               {movieDetails.detail.genres.map((genre, index) => (
-                <p key={index} className='bg-white rounded-lg font-semibold text-[16px] text-center px-2 mr-3 mb-2'>{genre.name}</p>
+                <p key={index} className='bg-white rounded-lg font-semibold text-[16px] text-center px-2 mr-3 mb-2'>
+                  {genre.name}
+                </p>
               ))}
             </div>
+
+            {/* Synopsis */}
             <h1 className='mt-4 text-xl font-medium'>Synopsis</h1>
             <p className='mt-2 text-gray-300'>{movieDetails.detail.overview}</p>
 
-            {movieDetails.cast.crew[0] && <><h1 className='mt-4 text-xl font-medium'>Director</h1>
-              <div className='flex mt-3 gap-2 flex-wrap'>
-                <p className=' border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>{movieDetails.cast.crew[0].name}</p>
-              </div>
-            </>}
+            {/* Director */}
+            {movieDetails.cast.crew[0] && (
+              <>
+                <h1 className='mt-4 text-xl font-medium'>Director</h1>
+                <div className='flex mt-3 gap-2 flex-wrap'>
+                  <p className='border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>
+                    {movieDetails.cast.crew[0].name}
+                  </p>
+                </div>
+              </>
+            )}
 
-            {movieDetails.detail.created_by && <><h1 className='mt-4 text-xl font-medium'>Created by</h1>
-              <div className='flex mt-3 gap-2 flex-wrap'>
-                <p className=' border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>{movieDetails.detail.created_by.length>0 && (movieDetails.detail.created_by[0].name || movieDetails.detail.created_by[0].original_name)}</p>
-              </div>
-            </>}
+            {/* Created by */}
+            {movieDetails.detail.created_by && (
+              <>
+                <h1 className='mt-4 text-xl font-medium'>Created by</h1>
+                <div className='flex mt-3 gap-2 flex-wrap'>
+                  <p className='border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>
+                    {movieDetails.detail.created_by.length > 0 && 
+                      (movieDetails.detail.created_by[0].name || movieDetails.detail.created_by[0].original_name)}
+                  </p>
+                </div>
+              </>
+            )}
 
+            {/* Cast */}
             <h1 className='mt-4 text-xl font-medium'>Casts</h1>
             <div className='flex mt-3 gap-2 flex-wrap'>
               {movieDetails.cast.cast.map((cast, index) => (
-                <p key={index} className=' border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>{cast.name}</p>
+                <p key={index} className='border border-gray-400 font-semibold rounded-lg px-4 text-[16px] text-center'>
+                  {cast.name}
+                </p>
               ))}
             </div>
 
+            {/* Links */}
             <div className='mt-8'>
               <div className='inline'>
                 <a
@@ -165,7 +228,7 @@ function Deatails() {
                   Website <FontAwesomeIcon className='px-4' icon={faLink} />
                 </a>
 
-                {movieDetails.detail.imdb_id &&
+                {movieDetails.detail.imdb_id && (
                   <a
                     href={`https://www.imdb.com/title/${movieDetails.detail.imdb_id}`}
                     target="_blank"
@@ -174,15 +237,15 @@ function Deatails() {
                   >
                     IMDB <FontAwesomeIcon className='px-4' icon={faTicket} />
                   </a>
-                }
-
+                )}
               </div>
             </div>
             <div className='flex mt-10'><p className='invisible'>.</p></div>
           </div>
         </div>
       </div>
-    </div >
+    </div>
+  );
+}
 
-  )
-} export default Deatails;
+export default Details;

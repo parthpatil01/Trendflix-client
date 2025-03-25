@@ -61,9 +61,7 @@ const BookmarkButton = ({ item, location, onDelete }) => {
   const [removeBookmark, { loading: removeLoading }] = useMutation(REMOVE_BOOKMARK, {
     onCompleted: () => {
       refetch(); // Re-check bookmark status after removing
-      if (location !== 172) {
         onDelete(item.id);
-      }
     },
     onError: (error) => {
       console.error('Error removing bookmark:', error);
