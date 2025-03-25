@@ -24,11 +24,10 @@ Welcome to the Trendflix Client! This README will guide you through the setup, u
 ## Technologies Used
 * React
 * Redux
+* GraphQl
 * React-Router-Dom
 * React Hooks
 * Tailwind CSS
-* React Icons
-* React Infinite Scroll
 
 ## Installation
 To get started with the project, follow these steps:
@@ -59,8 +58,6 @@ Trendflix-client/
 │   │   ├── GridItem.jsx
 |   |   ├── SearchInput.jsx 
 |   |   ├── SearchProp.jsx 
-│   ├── helper/ 
-│   │   ├── makeRequestWithToeken.js 
 │   ├── pages/ 
 │   │   ├── Bookmarks.jsx 
 │   │   ├── Details.jsx
@@ -78,6 +75,7 @@ Trendflix-client/
 │   │   ├── moviesSlice.js
 │   │   ├── trendingSlice.js
 │   │   ├── tvseriesSlice.js
+|   ├── apolloClient.js
 │   ├── App.js
 │   ├── main.jsx
 ├── tailwind.config.js
