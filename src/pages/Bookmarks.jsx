@@ -1,4 +1,4 @@
-// Bookmarks.js
+
 import React, { useState } from 'react';
 import GridItem from '../components/GridItem';
 import SearchInput from '../components/SearchInput';
@@ -33,14 +33,14 @@ function Bookmarks() {
 
 
     const handleDelete = (itemId) => {
-        // Determine whether the item is a movie or a TV series
+       
         const itemToDelete = data.movies.find(item => item.id === itemId);
         console.log(itemToDelete);
         if (itemToDelete) {
-            // If the item is in the movies array, remove it from there
+            
             dispatch(removeBookmarkMovie(itemId));
         } else {
-            // If the item is not in the movies array, it must be in the TV series array
+            
             dispatch(removeBookmarkTVSeries(itemId));
         }
         setSearchResults([]);

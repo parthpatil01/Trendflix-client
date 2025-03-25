@@ -56,8 +56,7 @@ function SignIn() {
     
             if (data?.loginUser?.token) {
                 const { token, data: userData } = data.loginUser;
-    
-                // Dispatch Redux action & store in localStorage
+
                 dispatch(signIn({ token, data: userData }));
                 resetForm();
                 navigate('/', { replace: true });
@@ -85,7 +84,7 @@ function SignIn() {
     
 
     const isValidEmail = (email) => {
-        // Basic email validation regex
+        
         const emailRegex = /\S+@\S+\.\S+/;
         return emailRegex.test(email);
     };

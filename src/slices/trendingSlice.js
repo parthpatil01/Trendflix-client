@@ -1,4 +1,4 @@
-// slices/trendingSlice.js
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../apolloClient';
 import { gql } from '@apollo/client';

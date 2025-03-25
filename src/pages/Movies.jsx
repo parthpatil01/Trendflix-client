@@ -11,7 +11,7 @@ function Movies() {
     const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
-        // Initial load with null cursor
+       
         dispatch(fetchMovies(null));
     }, [dispatch]);
 

@@ -81,7 +81,6 @@ function SignUp() {
     
 
     const isValidEmail = (email) => {
-        // Basic email validation regex
         const emailRegex = /\S+@\S+\.\S+/;
         return emailRegex.test(email);
     };

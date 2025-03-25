@@ -1,4 +1,4 @@
-// TVSeries.js
+
 import React, { useState, useEffect } from 'react';
 import GridItem from '../components/GridItem';
 import SearchInput from '../components/SearchInput';
@@ -26,7 +26,7 @@ function TVSeries() {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchTV(null)); // Initial load with no cursor
+    dispatch(fetchTV(null)); 
   }, [dispatch]);
 
   const fetchMoreData = () => {

@@ -1,4 +1,4 @@
-// slices/bookmarkSlice.js
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../apolloClient';
 import { gql } from '@apollo/client';
@@ -26,7 +26,6 @@ export const fetchBookmarks = createAsyncThunk(
       fetchPolicy: 'network-only'
     });
 
-    // Categorize bookmarks into movies and TV series
     const movies = [];
     const tvSeries = [];
     response.data.bookmarks.forEach(item => {

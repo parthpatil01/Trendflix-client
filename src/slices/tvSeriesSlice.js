@@ -1,4 +1,4 @@
-// tvSlice.js
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../apolloClient';
 import { gql } from '@apollo/client';
@@ -29,7 +29,7 @@ export const fetchTV = createAsyncThunk('tvseries/fetchTV', async (cursor) => {
   const response = await client.query({
     query: GET_TV_SERIES,
     variables: { 
-      first: 20, // Number of items per page
+      first: 20, 
       after: cursor 
     },
     fetchPolicy: 'network-only'

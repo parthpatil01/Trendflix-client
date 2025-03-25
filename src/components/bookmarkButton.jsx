@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
 
-// GraphQL queries and mutations
 const CHECK_BOOKMARK_STATUS = gql`
   query BookmarkStatus($itemId: Int!) {
     bookmarkStatus(itemId: $itemId) {
@@ -36,11 +35,10 @@ const BookmarkButton = ({ item, location, onDelete }) => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
   
-  // Bookmark status query
   const { data, loading: statusLoading, refetch } = useQuery(CHECK_BOOKMARK_STATUS, {
     variables: { itemId: item.id },
     skip: !isAuthenticated,
-    fetchPolicy: 'network-only', // Always fetch fresh data
+    fetchPolicy: 'network-only', 
     onError: (error) => {
       console.error('Error checking bookmark status:', error);
     }
@@ -48,7 +46,7 @@ const BookmarkButton = ({ item, location, onDelete }) => {
 
   const [addBookmark, { loading: addLoading }] = useMutation(ADD_BOOKMARK, {
     onCompleted: () => {
-      refetch(); // Re-check bookmark status after adding
+      refetch(); 
     },
     onError: (error) => {
       console.error('Error adding bookmark:', error);
@@ -60,7 +58,7 @@ const BookmarkButton = ({ item, location, onDelete }) => {
 
   const [removeBookmark, { loading: removeLoading }] = useMutation(REMOVE_BOOKMARK, {
     onCompleted: () => {
-      refetch(); // Re-check bookmark status after removing
+      refetch(); 
         onDelete(item.id);
     },
     onError: (error) => {

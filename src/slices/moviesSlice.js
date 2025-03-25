@@ -1,4 +1,4 @@
-// moviesSlice.js
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import client from '../apolloClient';
 import { gql } from '@apollo/client';
@@ -31,7 +31,7 @@ export const fetchMovies = createAsyncThunk('movies/fetchMovies', async (cursor)
   const response = await client.query({
     query: GET_MOVIES,
     variables: { 
-      first: 20, // Number of items per page
+      first: 20, 
       after: cursor 
     },
     fetchPolicy: 'network-only'
@@ -60,7 +60,7 @@ const moviesSlice = createSlice({
       })
       .addCase(fetchMovies.fulfilled, (state, action) => {
         state.loading = false;
-        // Map edges to nodes and add to movies array
+        
         const newMovies = action.payload.edges.map(edge => edge.node);
         state.movies = [...state.movies, ...newMovies];
         state.cursor = action.payload.pageInfo.endCursor;
