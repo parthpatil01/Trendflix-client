@@ -1,15 +1,32 @@
 // slices/trendingSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import client from '../apolloClient';
+import { gql } from '@apollo/client';
 
 export const fetchTrending = createAsyncThunk(
   'trending/fetchTrending',
   async () => {
-    const response = await axios.get(
-      `${import.meta.env.VITE_APP_API_URL}/data/trending`
-    );
-    return response.data;
+    const GET_TRENDING = gql`
+      query GetTrending {
+        trending {
+          id
+          title
+          name
+          backdrop_path
+          poster_path
+          release_date
+          first_air_date
+          media_type
+        }
+      }
+    `;
+
+    const response = await client.query({
+      query: GET_TRENDING,
+      fetchPolicy: 'network-only'
+    });
+
+    return response.data.trending;
   }
 );
 
@@ -36,6 +53,5 @@ const trendingSlice = createSlice({
       });
   },
 });
-
 
 export default trendingSlice.reducer;
