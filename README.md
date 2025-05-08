@@ -3,6 +3,7 @@
 Welcome to the Trendflix Client! This README will guide you through the setup, usage, and structure of the application. This app is built using modern frontend technologies including React, Redux, React-Router-Dom, Tailwind CSS, and several React utility libraries.
 
 #### Live link: https://trendflix.onrender.com
+#### Server link: https://github.com/parthpatil01/Trendflix-server
 
 ## Table of Contents
 * Features 
