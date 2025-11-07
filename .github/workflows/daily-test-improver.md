@@ -4,7 +4,10 @@ on:
     pull_request:
       branches:
         - continuous-ai
-      
+    schedule:
+        # Run daily at 2am UTC, all days except Saturday and Sunday
+        - cron: "0 2 * * 1-5"
+    stop-after: +48h # workflow will no longer trigger after 48 hours
 
 timeout_minutes: 30
 
