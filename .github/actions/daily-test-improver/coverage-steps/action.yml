@@ -4,16 +4,25 @@ description: 'Build project, run tests, and generate coverage report for Trendfl
 runs:
   using: 'composite'
   steps:
-    # Step 1: Install testing dependencies
-    # Installs Vitest and React Testing Library packages needed for testing
+    # Step 1: Install patch-package (required for postinstall scripts)
+    # This is needed to avoid failures during dependency installation
+    - name: Install patch-package globally
+      shell: bash
+      run: |
+        echo "=== Installing patch-package ===" | tee -a coverage-steps.log
+        npm install -g patch-package 2>&1 | tee -a coverage-steps.log
+        echo "patch-package installed" | tee -a coverage-steps.log
+
+    # Step 2: Install testing dependencies
+    # Installs Vitest, coverage provider, and React Testing Library packages needed for testing
     - name: Install testing dependencies
       shell: bash
       run: |
         echo "=== Installing testing dependencies ===" | tee -a coverage-steps.log
-        npm install --save-dev vitest @vitest/ui @testing-library/react @testing-library/jest-dom @testing-library/user-event happy-dom 2>&1 | tee -a coverage-steps.log
+        env -u NODE_ENV npm install --save-dev vitest@^2.1.8 @vitest/ui@^2.1.8 @vitest/coverage-v8@^2.1.8 @testing-library/react @testing-library/jest-dom @testing-library/user-event happy-dom 2>&1 | tee -a coverage-steps.log
         echo "Testing dependencies installed successfully" | tee -a coverage-steps.log
 
-    # Step 2: Create vitest configuration
+    # Step 3: Create vitest configuration
     # Sets up Vitest with React plugin, happy-dom environment, and coverage settings
     # Coverage will be generated in the 'coverage' directory with multiple report formats
     - name: Create vitest configuration
@@ -51,7 +60,7 @@ runs:
         EOF
         echo "vitest.config.js created successfully" | tee -a coverage-steps.log
 
-    # Step 3: Create test setup file
+    # Step 4: Create test setup file
     # Configures the testing environment with jest-dom matchers
     - name: Create test setup file
       shell: bash
@@ -70,7 +79,7 @@ runs:
         EOF
         echo "Test setup file created successfully" | tee -a coverage-steps.log
 
-    # Step 4: Add test scripts to package.json
+    # Step 5: Add test scripts to package.json
     # Adds npm scripts for running tests and generating coverage reports
     - name: Add test scripts to package.json
       shell: bash
@@ -89,33 +98,34 @@ runs:
         " 2>&1 | tee -a coverage-steps.log
         echo "Test scripts added to package.json" | tee -a coverage-steps.log
 
-    # Step 5: Install all dependencies (including newly added test dependencies)
+    # Step 6: Install all dependencies (including newly added test dependencies)
     # Ensures all packages are properly installed before building/testing
+    # NODE_ENV is unset to ensure devDependencies are installed
     - name: Install all dependencies
       shell: bash
       run: |
         echo "=== Installing all dependencies ===" | tee -a coverage-steps.log
-        npm install 2>&1 | tee -a coverage-steps.log
+        env -u NODE_ENV npm install 2>&1 | tee -a coverage-steps.log
         echo "All dependencies installed" | tee -a coverage-steps.log
 
-    # Step 6: Build the project
+    # Step 7: Build the project
     # Compiles the React application using Vite
     - name: Build project
       shell: bash
       run: |
         echo "=== Building project ===" | tee -a coverage-steps.log
-        npm run build 2>&1 | tee -a coverage-steps.log
+        env -u NODE_ENV npm run build 2>&1 | tee -a coverage-steps.log
         echo "Project built successfully" | tee -a coverage-steps.log
 
-    # Step 7: Run tests with coverage
+    # Step 8: Run tests with coverage
     # Executes all tests and generates coverage reports
     # Coverage reports will be in: coverage/index.html (HTML), coverage/coverage-final.json (JSON), coverage/lcov.info (LCOV)
     - name: Run tests with coverage
       shell: bash
       run: |
         echo "=== Running tests with coverage ===" | tee -a coverage-steps.log
-        npm run test:coverage 2>&1 | tee -a coverage-steps.log || {
-          echo "WARNING: Test coverage command failed, but continuing..." | tee -a coverage-steps.log
+        env -u NODE_ENV npm run test:coverage 2>&1 | tee -a coverage-steps.log || {
+          echo "WARNING: Test coverage command failed (exit code $?), but continuing..." | tee -a coverage-steps.log
           echo "This may be expected if no tests exist yet." | tee -a coverage-steps.log
           # Create empty coverage directory and report if tests fail
           mkdir -p coverage
@@ -123,7 +133,7 @@ runs:
         }
         echo "Test coverage step completed" | tee -a coverage-steps.log
 
-    # Step 8: Display coverage summary
+    # Step 9: Display coverage summary
     # Shows a summary of the coverage results
     - name: Display coverage summary
       shell: bash
@@ -142,7 +152,7 @@ runs:
           echo "No coverage report found" | tee -a coverage-steps.log
         fi
 
-    # Step 9: Upload coverage report as artifact
+    # Step 10: Upload coverage report as artifact
     # Makes the coverage report available for download and review
     # The artifact will be named "coverage" and includes all coverage reports
     - name: Upload coverage report
