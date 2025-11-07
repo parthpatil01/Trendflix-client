@@ -1,0 +1,79 @@
+name: 'Run Test Coverage Steps'
+description: 'Build the project, run tests, and generate coverage reports for Trendflix-client'
+
+runs:
+  using: "composite"
+  steps:
+    # Step 1: Install dependencies
+    # Note: NODE_ENV=production prevents devDependencies installation, so we unset it
+    - name: Install dependencies
+      shell: bash
+      run: |
+        echo "Installing npm dependencies..." | tee -a coverage-steps.log
+        unset NODE_ENV
+        npm ci 2>&1 | tee -a coverage-steps.log
+        echo "Dependencies installed successfully" | tee -a coverage-steps.log
+    
+    # Step 2: Create test setup file if it doesn't exist
+    # The vite.config.js references './src/test/setup.js' but it may not exist yet
+    - name: Create test setup file
+      shell: bash
+      run: |
+        echo "Checking for test setup file..." | tee -a coverage-steps.log
+        if [ ! -f "src/test/setup.js" ]; then
+          echo "Creating test setup directory and file..." | tee -a coverage-steps.log
+          mkdir -p src/test
+          cat > src/test/setup.js << 'EOF'
+        // Test setup file for Vitest
+        import { expect, afterEach } from 'vitest';
+        import { cleanup } from '@testing-library/react';
+        import '@testing-library/jest-dom';
+        
+        // Cleanup after each test
+        afterEach(() => {
+          cleanup();
+        });
+        EOF
+          echo "Test setup file created at src/test/setup.js" | tee -a coverage-steps.log
+        else
+          echo "Test setup file already exists" | tee -a coverage-steps.log
+        fi
+    
+    # Step 3: Build the project
+    # Unset NODE_ENV to avoid issues with Vite build
+    - name: Build project
+      shell: bash
+      run: |
+        echo "Building the project..." | tee -a coverage-steps.log
+        unset NODE_ENV
+        npm run build 2>&1 | tee -a coverage-steps.log
+        echo "Build completed successfully" | tee -a coverage-steps.log
+    
+    # Step 4: Run tests with coverage
+    # Coverage reports will be generated in the 'coverage/' directory
+    # Formats: text (console), json, html, lcov
+    # Note: Unset NODE_ENV to ensure test dependencies are available
+    - name: Run tests with coverage
+      shell: bash
+      run: |
+        echo "Running tests with coverage collection..." | tee -a coverage-steps.log
+        unset NODE_ENV
+        npm run test:coverage 2>&1 | tee -a coverage-steps.log
+        echo "Test coverage completed" | tee -a coverage-steps.log
+        echo "" | tee -a coverage-steps.log
+        echo "Coverage reports generated in coverage/ directory:" | tee -a coverage-steps.log
+        echo "  - coverage/index.html (HTML report - open in browser)" | tee -a coverage-steps.log
+        echo "  - coverage/coverage-final.json (JSON report)" | tee -a coverage-steps.log
+        echo "  - coverage/lcov.info (LCOV report)" | tee -a coverage-steps.log
+        echo "  - Text summary displayed above" | tee -a coverage-steps.log
+    
+    # Step 5: Upload coverage reports as artifact
+    # The coverage directory contains all generated reports
+    - name: Upload coverage reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage
+        path: |
+          coverage/
+          coverage-steps.log
+        retention-days: 30
