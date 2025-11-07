@@ -58,7 +58,7 @@ permissions:
   actions: read
   attestations: read
   checks: read
-  contents: read
+  contents: write
   deployments: read
   discussions: read
   id-token: write
@@ -66,7 +66,7 @@ permissions:
   models: read
   packages: read
   pages: read
-  pull-requests: read
+  pull-requests: write
   repository-projects: read
   security-events: read
   statuses: read
