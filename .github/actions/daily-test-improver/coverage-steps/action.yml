@@ -5,10 +5,12 @@ runs:
   using: "composite"
   steps:
     # Step 1: Install dependencies
+    # Note: NODE_ENV=production prevents devDependencies installation, so we unset it
     - name: Install dependencies
       shell: bash
       run: |
         echo "Installing npm dependencies..." | tee -a coverage-steps.log
+        unset NODE_ENV
         npm ci 2>&1 | tee -a coverage-steps.log
         echo "Dependencies installed successfully" | tee -a coverage-steps.log
     
@@ -38,20 +40,24 @@ runs:
         fi
     
     # Step 3: Build the project
+    # Unset NODE_ENV to avoid issues with Vite build
     - name: Build project
       shell: bash
       run: |
         echo "Building the project..." | tee -a coverage-steps.log
+        unset NODE_ENV
         npm run build 2>&1 | tee -a coverage-steps.log
         echo "Build completed successfully" | tee -a coverage-steps.log
     
     # Step 4: Run tests with coverage
     # Coverage reports will be generated in the 'coverage/' directory
     # Formats: text (console), json, html, lcov
+    # Note: Unset NODE_ENV to ensure test dependencies are available
     - name: Run tests with coverage
       shell: bash
       run: |
         echo "Running tests with coverage collection..." | tee -a coverage-steps.log
+        unset NODE_ENV
         npm run test:coverage 2>&1 | tee -a coverage-steps.log
         echo "Test coverage completed" | tee -a coverage-steps.log
         echo "" | tee -a coverage-steps.log
