@@ -14,6 +14,8 @@ timeout_minutes: 30
 permissions:
   all: read
   id-token: write  # for auth in some actions
+  contents: write
+  pull-requests: write
 
 network: defaults
 

@@ -1,0 +1,4 @@
+agents:
+  - name: daily-test-improver
+    description: Improves test coverage systematically
+    enabled: true
