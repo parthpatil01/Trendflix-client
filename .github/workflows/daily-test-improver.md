@@ -1,6 +1,9 @@
 ---
 on:
     workflow_dispatch:
+    pull_request:
+      branches:
+        - continuous-ai
     schedule:
         # Run daily at 2am UTC, all days except Saturday and Sunday
         - cron: "0 2 * * 1-5"
