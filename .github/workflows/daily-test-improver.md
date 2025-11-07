@@ -20,6 +20,7 @@ safe-outputs:
   add-comment:
     discussion: true
     target: "*" # can add a comment to any one single issue or pull request
+  push-to-pull-request-branch:
   create-pull-request: # can create a pull request
     draft: true
 
