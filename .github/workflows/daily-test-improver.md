@@ -100,7 +100,7 @@ You are an AI assistant for `${{ github.repository }}`. Your mission: Create a p
    - Use `create_pull_request` tool with:
      - Title: "Demo PR - [YYYY-MM-DD]"
      - Description should include:
-       - Summary: "Simple demo pull request with timestamped marker file"
+       - Summary- "Simple demo pull request with timestamped marker file"
        - Base branch: (the branch from step 1)
        - Head branch: (your new branch from step 2)
        - Files modified: `demo-marker.txt`
